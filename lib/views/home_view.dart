@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final items = [
-      {'icon': Icons.school, 'label': 'Classes'},
-      {'icon': Icons.people, 'label': 'Students'},
+      {'icon': Icons.person, 'label': 'Data Guru'},
+      {'icon': Icons.list_alt, 'label': 'Jurnal'},
       {'icon': Icons.calendar_today, 'label': 'Schedule'},
       {'icon': Icons.settings, 'label': 'Settings'},
     ];
@@ -141,7 +141,11 @@ class _HomePageState extends State<HomePage> {
                 children: items.map((item) {
                   return InkWell(
                     onTap: () {
-                      // TODO: handle navigation for ${item['label']}
+                      if (item['label'] == 'Data Guru') {
+                        Navigator.of(context).pushNamed('/profil');
+                      } else if (item['label'] == 'Jurnal') {
+                        Navigator.of(context).pushNamed('/jurnal');
+                      }
                     },
                     borderRadius: BorderRadius.circular(12),
                     child: Container(

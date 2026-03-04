@@ -4,7 +4,7 @@ class UserModel {
   final String username;
   final String email;
   final String? identitas;
-  final String? idGuru;
+  final String? id_guru;
   final String? token;
   final String? foto;
 
@@ -14,7 +14,7 @@ class UserModel {
     required this.username,
     required this.email,
     this.identitas,
-    this.idGuru,
+    this.id_guru,
     this.token,
     this.foto,
   });
@@ -26,7 +26,7 @@ class UserModel {
       username: json['username'] ?? '',
       email: json['email'] ?? '',
       identitas: json['identitas'],
-      idGuru: json['id_guru'],
+      id_guru: json['id_guru'],
       token: token ?? json['token'],
       foto: json['foto'],
     );
@@ -39,7 +39,7 @@ class UserModel {
       'username': username,
       'email': email,
       'identitas': identitas,
-      'id_guru': idGuru,
+      'id_guru': id_guru,
       'token': token,
       'foto': foto,
     };

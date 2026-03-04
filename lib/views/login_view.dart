@@ -47,7 +47,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const FlutterLogo(size: 96),
+            const Image(
+              image: AssetImage('assets/images/skanida.png'),
+              width: 96,
+              height: 96,
+            ),
             const SizedBox(height: 24),
             Card(
               shape: RoundedRectangleBorder(

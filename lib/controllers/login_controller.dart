@@ -50,7 +50,12 @@ class LoginController {
           token: token,
         );
         // Save login state, token, and user name
-        await AuthService.saveLoginState(true, token: user.token, userName: user.name);
+        await AuthService.saveLoginState(
+          true,
+          token: user.token,
+          username: user.name,
+          id_guru: user.id_guru,
+        );
         return LoginResult(
           success: true,
           message: 'Login berhasil',
