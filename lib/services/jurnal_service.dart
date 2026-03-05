@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/jurnal_model.dart';
+import '../models/jurnal_detail_model.dart';
 import '../models/kelas_model.dart';
 import '../models/mapel_model.dart';
 import 'auth_service.dart';
@@ -61,6 +62,13 @@ class JurnalService {
           rawList = rawData;
         }
 
+        for (var item in rawList) {
+          debugPrint(
+            '=== JURNAL ITEM KEYS: ${(item as Map).keys.toList()} ===',
+          );
+          debugPrint('=== JURNAL ITEM: $item ===');
+        }
+
         final jurnalList = rawList
             .map((item) => JurnalModel.fromJson(item as Map<String, dynamic>))
             .toList();
@@ -98,10 +106,10 @@ class JurnalService {
 
   static Future<Map<String, dynamic>> createJurnal({
     required String hari,
-    required String kelas,
+    required String idKelas,
     required String jamMulai,
     required String jamSelesai,
-    required String mapel,
+    required String idMapel,
     required String tglPembelajaran,
     required String materi,
     String? catatan,
@@ -129,10 +137,10 @@ class JurnalService {
         body: jsonEncode({
           'id_guru': idGuru,
           'hari': hari,
-          'kelas': kelas,
+          'id_kelas': idKelas,
           'jam_mulai': jamMulai,
           'jam_selesai': jamSelesai,
-          'mapel': mapel,
+          'id_mapel': idMapel,
           'tgl_pembelajaran': tglPembelajaran,
           'materi': materi,
           'catatan': catatan ?? '',
@@ -216,6 +224,61 @@ class JurnalService {
     return [];
   }
 
+  static Future<Map<String, dynamic>> getJurnalDetail(String id) async {
+    final token = await AuthService.getToken();
+
+    if (token == null) {
+      return {'success': false, 'message': 'Token tidak ditemukan'};
+    }
+
+    final url = Uri.parse('$_baseUrl/jurnal/$id');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      debugPrint('=== JURNAL DETAIL DEBUG ===');
+      debugPrint('URL: $url');
+      debugPrint('Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
+      debugPrint('============================');
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final rawData = body['data'] ?? body;
+        final presensi = body['presensi'];
+        final detail = JurnalDetailModel.fromJson(
+          rawData is Map<String, dynamic> ? rawData : {},
+          presensi: presensi is List ? presensi : [],
+        );
+        return {
+          'success': true,
+          'data': detail,
+          'message': body['message'] ?? 'Berhasil',
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              body['message'] ??
+              'Gagal memuat detail jurnal (${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Tidak dapat terhubung ke server: $e',
+      };
+    }
+  }
+
   static Future<List<MapelModel>> getMapel() async {
     final token = await AuthService.getToken();
 
@@ -262,5 +325,57 @@ class JurnalService {
     }
 
     return [];
+  }
+
+  static Future<Map<String, dynamic>> ubahStatusPresensi({
+    required String idPresensi,
+    required String status,
+  }) async {
+    final token = await AuthService.getToken();
+
+    if (token == null) {
+      return {'success': false, 'message': 'Token tidak ditemukan'};
+    }
+
+    final url = Uri.parse('$_baseUrl/presensi/$idPresensi');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({'id_presensi': idPresensi, 'status': status}),
+      );
+
+      debugPrint('=== UBAH STATUS PRESENSI DEBUG ===');
+      debugPrint('URL: $url');
+      debugPrint('Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
+      debugPrint('===================================');
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return {
+          'success': true,
+          'message': body['message'] ?? 'Status berhasil diubah',
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              body['message'] ??
+              'Gagal mengubah status (${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Tidak dapat terhubung ke server: $e',
+      };
+    }
   }
 }

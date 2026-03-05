@@ -85,10 +85,10 @@ class _JurnalCreateViewState extends State<JurnalCreateView> {
 
     final result = await JurnalService.createJurnal(
       hari: _selectedHari!,
-      kelas: _selectedKelas!.id,
+      idKelas: _selectedKelas!.id,
       jamMulai: _jamMulai.toString(),
       jamSelesai: _jamSelesai.toString(),
-      mapel: _selectedMapel!.id,
+      idMapel: _selectedMapel!.id,
       tglPembelajaran: _selectedDate.toIso8601String().split('T').first,
       materi: _materiController.text,
       catatan: _catatanController.text,
@@ -142,11 +142,11 @@ class _JurnalCreateViewState extends State<JurnalCreateView> {
                   border: OutlineInputBorder(),
                 ),
                 items: const [
-                  DropdownMenuItem(value: 'Senin', child: Text('Senin')),
-                  DropdownMenuItem(value: 'Selasa', child: Text('Selasa')),
-                  DropdownMenuItem(value: 'Rabu', child: Text('Rabu')),
-                  DropdownMenuItem(value: 'Kamis', child: Text('Kamis')),
-                  DropdownMenuItem(value: 'Jumat', child: Text('Jumat')),
+                  DropdownMenuItem(value: '1', child: Text('Senin')),
+                  DropdownMenuItem(value: '2', child: Text('Selasa')),
+                  DropdownMenuItem(value: '3', child: Text('Rabu')),
+                  DropdownMenuItem(value: '4', child: Text('Kamis')),
+                  DropdownMenuItem(value: '5', child: Text('Jumat')),
                 ],
                 onChanged: (value) {
                   setState(() => _selectedHari = value);
