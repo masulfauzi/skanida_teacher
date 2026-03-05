@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../models/jurnal_model.dart';
 import '../models/jurnal_detail_model.dart';
@@ -37,11 +37,11 @@ class JurnalService {
         },
       );
 
-      debugPrint('=== JURNAL DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('====================');
+      log('=== JURNAL DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('====================');
 
       final body = jsonDecode(response.body);
 
@@ -63,10 +63,10 @@ class JurnalService {
         }
 
         for (var item in rawList) {
-          debugPrint(
+          log(
             '=== JURNAL ITEM KEYS: ${(item as Map).keys.toList()} ===',
           );
-          debugPrint('=== JURNAL ITEM: $item ===');
+          log('=== JURNAL ITEM: $item ===');
         }
 
         final jurnalList = rawList
@@ -147,11 +147,11 @@ class JurnalService {
         }),
       );
 
-      debugPrint('=== CREATE JURNAL DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('============================');
+      log('=== CREATE JURNAL DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('============================');
 
       final body = jsonDecode(response.body);
 
@@ -193,11 +193,11 @@ class JurnalService {
         },
       );
 
-      debugPrint('=== KELAS DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('====================');
+      log('=== KELAS DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('====================');
 
       final body = jsonDecode(response.body);
 
@@ -218,7 +218,7 @@ class JurnalService {
             .toList();
       }
     } catch (e) {
-      debugPrint('Error fetching kelas: $e');
+      log('Error fetching kelas: $e');
     }
 
     return [];
@@ -243,11 +243,11 @@ class JurnalService {
         },
       );
 
-      debugPrint('=== JURNAL DETAIL DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('============================');
+      log('=== JURNAL DETAIL DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('============================');
 
       final body = jsonDecode(response.body);
 
@@ -296,11 +296,11 @@ class JurnalService {
         },
       );
 
-      debugPrint('=== MAPEL DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('====================');
+      log('=== MAPEL DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('====================');
 
       final body = jsonDecode(response.body);
 
@@ -321,7 +321,7 @@ class JurnalService {
             .toList();
       }
     } catch (e) {
-      debugPrint('Error fetching mapel: $e');
+      log('Error fetching mapel: $e');
     }
 
     return [];
@@ -350,11 +350,11 @@ class JurnalService {
         body: jsonEncode({'id_presensi': idPresensi, 'status': status}),
       );
 
-      debugPrint('=== UBAH STATUS PRESENSI DEBUG ===');
-      debugPrint('URL: $url');
-      debugPrint('Status Code: ${response.statusCode}');
-      debugPrint('Response Body: ${response.body}');
-      debugPrint('===================================');
+      log('=== UBAH STATUS PRESENSI DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('===================================');
 
       final body = jsonDecode(response.body);
 
