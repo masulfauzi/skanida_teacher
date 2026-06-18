@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     final items = [
       {'icon': Icons.person, 'label': 'Data Guru'},
       {'icon': Icons.list_alt, 'label': 'Jurnal'},
-      {'icon': Icons.calendar_today, 'label': 'Schedule'},
+      {'icon': Icons.assignment, 'label': 'Ijin Siswa'},
       {'icon': Icons.settings, 'label': 'Settings'},
     ];
 
@@ -145,6 +145,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.of(context).pushNamed('/profil');
                       } else if (item['label'] == 'Jurnal') {
                         Navigator.of(context).pushNamed('/jurnal');
+                      } else if (item['label'] == 'Ijin Siswa') {
+                        Navigator.of(context).pushNamed('/ijin-siswa');
                       }
                     },
                     borderRadius: BorderRadius.circular(12),

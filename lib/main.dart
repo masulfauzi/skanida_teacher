@@ -7,6 +7,7 @@ import 'views/profil_view.dart';
 import 'views/jurnal_view.dart';
 import 'views/jurnal_create_view.dart';
 import 'views/jurnal_detail_view.dart';
+import 'views/ijin_siswa_view.dart';
 import 'helpers/date_helper.dart';
 
 Future<void> main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/profil': (_) => const ProfilView(),
         '/jurnal': (_) => const JurnalView(),
         '/jurnal/create': (_) => const JurnalCreateView(),
+        '/ijin-siswa': (_) => const IjinSiswaView(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/jurnal/detail') {
