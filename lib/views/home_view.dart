@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       {'icon': Icons.person, 'label': 'Data Guru'},
       {'icon': Icons.list_alt, 'label': 'Jurnal'},
       {'icon': Icons.assignment, 'label': 'Ijin Siswa'},
-      {'icon': Icons.settings, 'label': 'Settings'},
+      {'icon': Icons.how_to_reg, 'label': 'Presensi'},
     ];
 
     return Scaffold(
@@ -147,6 +147,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.of(context).pushNamed('/jurnal');
                       } else if (item['label'] == 'Ijin Siswa') {
                         Navigator.of(context).pushNamed('/ijin-siswa');
+                      } else if (item['label'] == 'Presensi') {
+                        Navigator.of(context).pushNamed('/presensi');
                       }
                     },
                     borderRadius: BorderRadius.circular(12),
