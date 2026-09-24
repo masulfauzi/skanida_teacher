@@ -6,8 +6,13 @@ import '../services/jurnal_service.dart';
 
 class JurnalDetailView extends StatefulWidget {
   final String jurnalId;
+  final bool readOnly;
 
-  const JurnalDetailView({super.key, required this.jurnalId});
+  const JurnalDetailView({
+    super.key,
+    required this.jurnalId,
+    this.readOnly = false,
+  });
 
   @override
   State<JurnalDetailView> createState() => _JurnalDetailViewState();
@@ -185,18 +190,28 @@ class _JurnalDetailViewState extends State<JurnalDetailView> {
                             siswa.nama ?? '-',
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          trailing: GestureDetector(
-                            onTap: () => _showStatusDialog(index),
-                            child: Chip(
-                              label: Text(
-                                siswa.statusKehadiran ?? '-',
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                              backgroundColor: _keteranganColor(
-                                siswa.statusKehadiran,
-                              ),
-                            ),
-                          ),
+                          trailing: widget.readOnly
+                              ? Chip(
+                                  label: Text(
+                                    siswa.statusKehadiran ?? '-',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  backgroundColor: _keteranganColor(
+                                    siswa.statusKehadiran,
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () => _showStatusDialog(index),
+                                  child: Chip(
+                                    label: Text(
+                                      siswa.statusKehadiran ?? '-',
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                    backgroundColor: _keteranganColor(
+                                      siswa.statusKehadiran,
+                                    ),
+                                  ),
+                                ),
                         ),
                       );
                     }),

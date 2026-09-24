@@ -6,6 +6,7 @@ import '../models/jurnal_detail_model.dart';
 import '../models/kelas_model.dart';
 import '../models/mapel_model.dart';
 import '../models/presensi_kelas_model.dart';
+import '../models/jurnal_kelas_model.dart';
 import 'auth_service.dart';
 
 class JurnalService {
@@ -376,6 +377,64 @@ class JurnalService {
           'message':
               body['message'] ??
               'Gagal memuat presensi kelas (${response.statusCode})',
+        };
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'message': 'Tidak dapat terhubung ke server: $e',
+      };
+    }
+  }
+
+  static Future<Map<String, dynamic>> getJurnalKelas(
+    String idKelas, {
+    String? tgl,
+  }) async {
+    final token = await AuthService.getToken();
+
+    if (token == null) {
+      return {'success': false, 'message': 'Token tidak ditemukan'};
+    }
+
+    final url = Uri.parse('$_baseUrl/jurnal/kelas/$idKelas').replace(
+      queryParameters: tgl != null ? {'tgl': tgl} : null,
+    );
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      log('=== JURNAL KELAS DEBUG ===');
+      log('URL: $url');
+      log('Status Code: ${response.statusCode}');
+      log('Response Body: ${response.body}');
+      log('==========================');
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final rawData = body['data'];
+        final data = JurnalKelasModel.fromJson(
+          rawData is Map<String, dynamic> ? rawData : {},
+        );
+        return {
+          'success': true,
+          'data': data,
+          'message': body['message'] ?? 'Berhasil',
+        };
+      } else {
+        return {
+          'success': false,
+          'message':
+              body['message'] ??
+              'Gagal memuat jurnal kelas (${response.statusCode})',
         };
       }
     } catch (e) {
