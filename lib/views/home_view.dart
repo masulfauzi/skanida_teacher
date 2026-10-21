@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
       {'icon': Icons.assignment, 'label': 'Ijin Siswa'},
       {'icon': Icons.how_to_reg, 'label': 'Presensi'},
       {'icon': Icons.menu_book, 'label': 'Jurnal Kelas'},
+      {'icon': Icons.info_outline, 'label': 'About'},
     ];
 
     return Scaffold(
@@ -152,6 +153,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.of(context).pushNamed('/presensi');
                       } else if (item['label'] == 'Jurnal Kelas') {
                         Navigator.of(context).pushNamed('/jurnal-kelas');
+                      } else if (item['label'] == 'About') {
+                        Navigator.of(context).pushNamed('/about');
                       }
                     },
                     borderRadius: BorderRadius.circular(12),
